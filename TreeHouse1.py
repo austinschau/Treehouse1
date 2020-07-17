@@ -15,7 +15,7 @@ from time import sleep
 def start_game():
     # write your code inside this function.
 
-    #introduction to the game
+    # introduction to the game
     print("Hello! Welcome to the random number guessing game!")
     print("")
     print("Here are the rules...")
@@ -31,44 +31,58 @@ def start_game():
 
     # yes or no variable for restarting game
     replay = 'y'
+    high_score = 0
 
     while replay == 'y':
 
-        randomNumber = random.randint(0,10)
-        guessCount = 1
+        random_number = random.randint(0,10)
+        guess_count = 1
 
         while True:
             # variable for holding guess count as a string
-            displayCount = ""
+            display_count = ""
 
             # format displayCount
-            if guessCount == 1:
-                displayCount = "1st"
-            elif guessCount == 2:
-                displayCount = "2nd"
-            elif guessCount == 3:
-                displayCount = "3rd"
+            if guess_count == 1:
+                display_count = "1st"
+            elif guess_count == 2:
+                display_count = "2nd"
+            elif guess_count == 3:
+                display_count = "3rd"
             else:
-                displayCount = str(guessCount) + "th"
+                display_count = str(guess_count) + "th"
 
             # variable stores the users guess
-            userGuess = ""
-            #Verify user input
+            user_guess = ""
+            # Verify user input
             while True:
-                userGuess = input("Please enter your  " + displayCount + " guess: ")
+                user_guess = input("Please enter your  " + display_count + " guess: ")
                 try:
-                    userGuess = int(userGuess)
+                    user_guess = int(user_guess)
                 except ValueError:
                     print("Sorry that is not a valid guess. Your guess must be an integer number.")
                     continue
-                if 0<= userGuess <= 10:
+                if 0<= user_guess <= 10:
                     break
                 else:
                     print("That number is not in the pre discussed range...it must be 1-10")
 
-            #check if users guess is correct
-            if int(userGuess) == randomNumber:
-                print("Wow! You guessed it on your " + displayCount + " try...")
+            # check if users guess is correct
+            if int(user_guess) == random_number:
+                print("Wow! You guessed it on your " + display_count + " try...")
+
+                # check if the user has a new high score. Does not display on first attempt
+                if high_score != 0:
+                    if high_score > guess_count:
+                        print("your previous high score was " + str(high_score) + ". You're doing quite well!")
+                        high_score = guess_count
+                    elif high_score == guess_count:
+                        print("Your previous high score was " + str(high_score) + ". You can probably do better...")
+                    else:
+                        print("Your previous high score was " + str(high_score) + "...are you even trying?")
+                else:
+                    high_score = guess_count
+
                 print("")
                 wish = input("Please enter your wish: ")
                 sleep(1)
@@ -88,7 +102,7 @@ def start_game():
                     print("Will you be wishing for " + wish + " again?")
                     print("Oh wait...memory error. I don't remember your wish...")
                     print("")
-                    randomNumber = random.randint(0, 10)
+                    random_number = random.randint(0, 10)
                     break
 
                 elif replay.lower() == "n":
@@ -98,12 +112,12 @@ def start_game():
                     print("I don't know what that means..but bye!")
                     break
 
-            elif int(userGuess) > randomNumber:
+            elif int(user_guess) > random_number:
                 print("Sorry, your guess was too high.")
             else:
                 print("Sorry, your guess was too low.")
 
-            guessCount += 1
+            guess_count += 1
 
 
 # Kick off the program by calling the start_game function.
